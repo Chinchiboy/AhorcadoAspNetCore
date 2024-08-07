@@ -1,0 +1,58 @@
+﻿@page
+@model AhorcadoModel
+@{
+    ViewData["Title"] = "Juego del Ahorcado";
+}
+
+<h2>Juego del Ahorcado</h2>
+
+<div>
+    <label>Temática: </label>
+    <span>@Model.Tematica</span>
+</div>
+
+<div>
+    <label>Palabra: </label>
+    <span>@Model.PalabraMostrada</span>
+</div>
+
+<div>
+    <label>Letras Usadas: </label>
+    <span>@Model.LetrasUsadas</span>
+</div>
+
+<div>
+    <label>Puntuación: </label>
+    <span>@Model.Puntuacion</span>
+</div>
+
+<img src="~/images/ahorcado_@($"{Model.IntentosFallidos}.png")" alt="Ahorcado">
+
+<form method="post">
+    <div>
+        @foreach (var letra in Model.Alfabeto)
+        {
+            <button type="submit" name="letra" value="@letra" @(!Model.TecladoHabilitado ? "disabled" : "")>
+                @letra
+            </button>
+        }
+    </div>
+    <div>
+        <button type="submit" name="reiniciar" value="true">Reiniciar Juego</button>
+        <button type="submit" name="siguienteRonda" value="true">Siguiente Ronda</button>
+    </div>
+</form>
+
+@if (Model.HaGanado)
+{
+    <div>
+        <h3>¡Ganaste!</h3>
+    </div>
+}
+
+@if (Model.HaPerdido)
+{
+    <div>
+        <h3>¡Perdiste! La palabra era: @Model.PalabraSecreta</h3>
+    </div>
+}
